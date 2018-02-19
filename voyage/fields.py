@@ -67,9 +67,24 @@ class Field(graphene.Field):
         return get_type(self._type)
 
 
-class UUID(graphene.ID):
+class ID(graphene.ID):
     def __new__(self, *args, **kwargs):
         return graphene.ID(*args, **update_source_resolver(kwargs))
+
+
+class Boolean(graphene.Boolean):
+    def __new__(self, *args, **kwargs):
+        return graphene.Boolean(*args, **update_source_resolver(kwargs))
+
+
+class Int(graphene.Int):
+    def __new__(self, *args, **kwargs):
+        return graphene.Int(*args, **update_source_resolver(kwargs))
+
+
+class Float(graphene.Float):
+    def __new__(self, *args, **kwargs):
+        return graphene.Float(*args, **update_source_resolver(kwargs))
 
 
 class String(graphene.String):
