@@ -1,15 +1,10 @@
-from graphene import ObjectType, String
+from graphene import ObjectType
 
-
-class TestQuery(object):
-    foo = String()
-
-    def resolve_foo(root, info):
-        return "Hello, world!"
+from .media import MediaQuery
 
 
 class Query(
     ObjectType,
-    TestQuery,
+    MediaQuery,
 ):
     """ Combine all queries into one """
