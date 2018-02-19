@@ -20,6 +20,9 @@ graphene = "*"
 sqlalchemy = "*"
 graphene-sqlalchemy = "*"
 flask-graphql = "*"
+flask-sqlalchemy = "*"
+sqlalchemy-utils = "*"
+"psycopg2-binary" = "*"
 
 
 [requires]
