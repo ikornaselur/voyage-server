@@ -7,6 +7,10 @@ name = "pypi"
 
 [dev-packages]
 
+pgcli = "*"
+flask-script = "*"
+ipdb = "*"
+pdbpp = "*"
 
 
 [packages]
