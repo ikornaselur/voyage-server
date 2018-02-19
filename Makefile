@@ -13,7 +13,7 @@ venv: dependencies
 
 # Run the dev server
 server:
-	FLASK_APP=voyage/app.py FLASK_DEBUG=1 pipenv run flask run -p 9999 --host 0.0.0.0
+	FLASK_APP=voyage/application.py FLASK_DEBUG=1 pipenv run flask run -p 9999 --host 0.0.0.0
 
 # Start a postgres docker and expose it on port the configured port
 postgres_docker_init:
@@ -29,6 +29,10 @@ postgres_init: postgres
 	@sleep 5
 	-createuser -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U postgres voyage
 	-createdb -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U postgres -O voyage voyage
+
+# Init DB
+database_init: postgres
+	pipenv run python init_db.py
 
 # Connect to postgres
 pg:
