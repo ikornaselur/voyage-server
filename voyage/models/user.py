@@ -29,4 +29,4 @@ class OAuth(OAuthConsumerMixin, db.Model):
     provider_user_id = db.Column(db.String(256), unique=True)
 
     user_id = db.Column(UUIDString, db.ForeignKey(User.id))
-    user = db.relationship(User)
+    user = db.relationship(User, backref='oauth')
