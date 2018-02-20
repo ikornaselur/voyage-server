@@ -1,6 +1,6 @@
 import inspect
 import operator
-from functools import partial
+from functools import partial, reduce
 
 import graphene
 from graphene import relay

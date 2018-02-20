@@ -11,6 +11,7 @@ pgcli = "*"
 flask-script = "*"
 ipdb = "*"
 pdbpp = "*"
+"flake8" = "*"
 
 
 [packages]

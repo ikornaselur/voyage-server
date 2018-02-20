@@ -45,3 +45,7 @@ pg:
 # Open a ipython shell with the application context
 shell:
 	pipenv run python manage.py shell
+
+# Lint
+lint:
+	pipenv run flake8 voyage
