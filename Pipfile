@@ -7,6 +7,11 @@ name = "pypi"
 
 [dev-packages]
 
+pgcli = "*"
+flask-script = "*"
+ipdb = "*"
+pdbpp = "*"
+"flake8" = "*"
 
 
 [packages]
@@ -16,6 +21,9 @@ graphene = "*"
 sqlalchemy = "*"
 graphene-sqlalchemy = "*"
 flask-graphql = "*"
+flask-sqlalchemy = "*"
+sqlalchemy-utils = "*"
+"psycopg2-binary" = "*"
 
 
 [requires]
