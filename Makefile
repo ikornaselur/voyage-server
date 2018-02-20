@@ -32,7 +32,11 @@ postgres_init: postgres
 
 # Init DB
 database_init: postgres
-	pipenv run python init_db.py
+	pipenv run python scripts/init_db.py
+
+# Add test data
+test_data: database_init
+	pipenv run python scripts/test_data.py
 
 # Connect to postgres
 pg:
