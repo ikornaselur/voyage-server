@@ -1,11 +1,9 @@
 import os
 
 from flask import Flask
-from flask_dance.contrib.google import make_google_blueprint
 from flask_graphql import GraphQLView
+from flask_login import login_required
 from werkzeug.contrib.fixers import ProxyFix
-
-from voyage.schema import schema
 
 
 def create_app():
@@ -18,24 +16,19 @@ def create_app():
         'SQLALCHEMY_TRACK_MODIFICATIONS': False,
     })
 
-    from .extensions import configure_extensions
-    configure_extensions(app)
-
+    from voyage.schema import schema
     app.add_url_rule(
         '/',
-        view_func=GraphQLView.as_view(
-            'graphql',
-            schema=schema,
-            graphiql=True,
+        view_func=login_required(
+            GraphQLView.as_view(
+                'graphql',
+                schema=schema,
+                graphiql=True,
+            )
         )
     )
-    app.register_blueprint(
-        make_google_blueprint(
-            client_id=os.environ['GOOGLE_CLIENT_ID'],
-            client_secret=os.environ['GOOGLE_CLIENT_SECRET'],
-            scope=['profile', 'email'],
-        ),
-        url_prefix='/login',
-    )
+
+    from .extensions import configure_extensions
+    configure_extensions(app)
 
     return app
