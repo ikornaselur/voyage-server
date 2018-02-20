@@ -28,7 +28,10 @@ def create_app():
         )
     )
 
-    from .extensions import configure_extensions
+    from voyage.auth import google_auth
+    google_auth(app)
+
+    from voyage.extensions import configure_extensions
     configure_extensions(app)
 
     return app
