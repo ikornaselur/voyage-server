@@ -1,5 +1,3 @@
-from sqlalchemy.orm import relationship
-
 from voyage.extensions import db
 from voyage.utils import UUIDString, uuid4_str
 
@@ -11,7 +9,7 @@ class Voyage(db.Model):
     name = db.Column(db.String, nullable=False)
 
     media_id = db.Column(UUIDString, db.ForeignKey('media.id'), nullable=False)
-    media = relationship('Media')
+    media = db.relationship('Media')
 
     def __repr__(self):
         return "<Voyage: {} ({})>".format(self.name, self.id)

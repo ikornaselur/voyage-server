@@ -2,28 +2,36 @@ import os
 
 from flask import Flask
 from flask_graphql import GraphQLView
-
-from voyage.schema import schema
+from flask_login import login_required
+from werkzeug.contrib.fixers import ProxyFix
 
 
 def create_app():
     app = Flask('voyage')
+    app.wsgi_app = ProxyFix(app.wsgi_app)
 
+    app.secret_key = os.environ.get('FLASK_SECRET', 's3cr3t')
     app.config.update({
         'SQLALCHEMY_DATABASE_URI': os.environ['SQLALCHEMY_DATABASE_URI'],
         'SQLALCHEMY_TRACK_MODIFICATIONS': False,
     })
 
-    from .extensions import configure_extensions
-    configure_extensions(app)
-
+    from voyage.schema import schema
     app.add_url_rule(
         '/',
-        view_func=GraphQLView.as_view(
-            'graphql',
-            schema=schema,
-            graphiql=True,
+        view_func=login_required(
+            GraphQLView.as_view(
+                'graphql',
+                schema=schema,
+                graphiql=True,
+            )
         )
     )
+
+    from voyage.auth import google_auth
+    google_auth(app)
+
+    from voyage.extensions import configure_extensions
+    configure_extensions(app)
 
     return app

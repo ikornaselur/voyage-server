@@ -9,7 +9,7 @@ dependencies:
 
 # Setup a virtualenv for the project using pipenv
 venv: dependencies
-	pipenv install
+	pipenv install --dev
 
 # Run the dev server
 server:
@@ -32,11 +32,11 @@ postgres_init: postgres
 
 # Init DB
 database_init: postgres
-	pipenv run python scripts/init_db.py
+	pipenv run python init_db.py
 
 # Add test data
 test_data: database_init
-	pipenv run python scripts/test_data.py
+	pipenv run python test_data.py
 
 # Connect to postgres
 pg:
