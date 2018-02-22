@@ -8,17 +8,34 @@ from snapshottest import Snapshot
 snapshots = Snapshot()
 
 snapshots['test_getting_all_voyages 1'] = {
-    'errors': [
-        {
-            'locations': [
+    'data': {
+        'voyages': {
+            'edges': [
                 {
-                    'column': 29,
-                    'line': 7
+                    'node': {
+                        'media': {
+                            'name': 'name'
+                        },
+                        'members': [
+                            {
+                                'email': 'owner@example.com',
+                                'name': 'Owner User'
+                            },
+                            {
+                                'email': 'member@example.com',
+                                'name': 'Member User'
+                            }
+                        ],
+                        'name': 'The Voyage',
+                        'owner': {
+                            'email': 'owner@example.com',
+                            'name': 'Owner User'
+                        }
+                    }
                 }
-            ],
-            'message': 'Field "media" of type "Media" must have a sub selection.'
+            ]
         }
-    ]
+    }
 }
 
 snapshots['test_getting_single_voyage 1'] = {

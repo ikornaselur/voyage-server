@@ -53,7 +53,7 @@ lint:
 
 # Run all tests
 test:
-	PIPENV_DOTENV_LOCATION=$(shell pwd)/.env.test pipenv run py.test tests/ -vv
+	PIPENV_DOTENV_LOCATION=$(shell pwd)/.env.test pipenv run py.test tests/
 
 # Run all tests, without capturing output
 test_debug:

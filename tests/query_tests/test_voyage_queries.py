@@ -6,7 +6,9 @@ def test_getting_all_voyages(graph_client, db_voyage, snapshot):
                     edges {
                         node {
                             name
-                            media
+                            media {
+                                name
+                            }
                             owner {
                                 name
                                 email
