@@ -6,7 +6,7 @@ from flask_login import login_required
 from werkzeug.contrib.fixers import ProxyFix
 
 
-def create_app():
+def create_app(testing=False):
     app = Flask('voyage')
     app.wsgi_app = ProxyFix(app.wsgi_app)
 
@@ -28,8 +28,9 @@ def create_app():
         )
     )
 
-    from voyage.auth import google_auth
-    google_auth(app)
+    if not testing:
+        from voyage.auth import google_auth
+        google_auth(app)
 
     from voyage.extensions import configure_extensions
     configure_extensions(app)

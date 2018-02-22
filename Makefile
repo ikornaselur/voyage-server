@@ -29,6 +29,7 @@ postgres_init: postgres
 	@sleep 5
 	-createuser -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U postgres voyage
 	-createdb -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U postgres -O voyage voyage
+	-createdb -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U postgres -O voyage voyage_test
 
 # Init DB
 database_init: postgres
@@ -49,3 +50,15 @@ shell:
 # Lint
 lint:
 	pipenv run flake8 voyage
+
+# Run all tests
+test:
+	PIPENV_DOTENV_LOCATION=$(shell pwd)/.env.test pipenv run py.test tests/
+
+# Run all tests, without capturing output
+test_debug:
+	PIPENV_DOTENV_LOCATION=$(shell pwd)/.env.test pipenv run py.test tests/ -vv -s --ff -x
+
+# Update all test snapshots
+update_snapshots:
+	PIPENV_DOTENV_LOCATION=$(shell pwd)/.env.test pipenv run py.test tests/ --snapshot-update
