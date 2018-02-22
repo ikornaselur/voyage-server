@@ -23,6 +23,7 @@ def test_getting_all_voyages(graph_client, db_voyage, snapshot):
             }
         ''')
 
+    assert 'errors' not in executed
     snapshot.assert_match(executed)
 
 
@@ -47,4 +48,5 @@ def test_getting_single_voyage(graph_client, db_voyage, snapshot):
             }}
         '''.format(db_voyage.id))
 
+    assert 'errors' not in executed
     snapshot.assert_match(executed)

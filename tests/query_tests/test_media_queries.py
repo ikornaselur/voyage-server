@@ -17,6 +17,7 @@ def test_getting_all_medias(graph_client, db_media, snapshot):
             }
         ''')
 
+    assert 'errors' not in executed
     snapshot.assert_match(executed)
 
 
@@ -35,4 +36,5 @@ def test_getting_single_media(graph_client, db_media, snapshot):
             }}
         '''.format(db_media.id))
 
+    assert 'errors' not in executed
     snapshot.assert_match(executed)

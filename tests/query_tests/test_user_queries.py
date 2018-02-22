@@ -10,4 +10,5 @@ def test_getting_current_user(graph_client, db_user, client, snapshot):
                 }
             ''')
 
+    assert 'errors' not in executed
     snapshot.assert_match(executed)
