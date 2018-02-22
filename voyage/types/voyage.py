@@ -9,10 +9,12 @@ class Voyage(ObjectType):
         interfaces = (Node, )
 
     id = fields.ID(required=True)
-
     name = fields.String()
 
     media = fields.Field('Media')
+
+    owner = fields.Field('User')
+    members = fields.List('User')
 
 
 class VoyageConnection(Connection):

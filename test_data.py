@@ -28,10 +28,3 @@ if __name__ == "__main__":
         )
         db.session.add(stormlight2)
         db.session.commit()
-
-        voyage = Voyage(
-            name='Stormlight Archive #2',
-            media=stormlight2,
-        )
-        db.session.add(voyage)
-        db.session.commit()
