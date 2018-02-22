@@ -41,16 +41,19 @@ class InviteUserToVoyage(Mutation):
     voyage = fields.Field('Voyage')
 
     def mutate(root, info, voyage_id, email):
+        voyage = Voyage.query.get(voyage_id)
+
+        if voyage is None:
+            raise MutationException('Voyage not found')
+
+        if current_user is not voyage.owner:
+            raise MutationException('Only voyage owners can invite users')
+
         user = User.query.filter(User.email == email).first()
 
         if user is None:
             # TODO: Invite the user
             raise MutationException('User not signed up')
-
-        voyage = Voyage.query.get(voyage_id)
-
-        if voyage is None:
-            raise MutationException('Voyage not found')
 
         if user in voyage.members:
             raise MutationException('User already a part of the mutation')
@@ -69,16 +72,19 @@ class RemoveUserFromVoyage(Mutation):
     voyage = fields.Field('Voyage')
 
     def mutate(root, info, voyage_id, email):
+        voyage = Voyage.query.get(voyage_id)
+
+        if voyage is None:
+            raise MutationException('Voyage not found')
+
+        if current_user is not voyage.owner:
+            raise MutationException('Only voyage owners can remove users')
+
         user = User.query.filter(User.email == email).first()
 
         if user is None:
             # TODO: Invite the user
             raise MutationException('User not signed up')
-
-        voyage = Voyage.query.get(voyage_id)
-
-        if voyage is None:
-            raise MutationException('Voyage not found')
 
         if user not in voyage.members:
             raise MutationException("User isn't a part of the voyage")
