@@ -12,6 +12,9 @@ flask-script = "*"
 ipdb = "*"
 pdbpp = "*"
 "flake8" = "*"
+pytest = "*"
+snapshottest = "*"
+mock = "*"
 
 
 [packages]

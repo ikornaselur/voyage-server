@@ -46,7 +46,7 @@ class InviteUserToVoyage(Mutation):
         if voyage is None:
             raise MutationException('Voyage not found')
 
-        if current_user is not voyage.owner:
+        if voyage.owner != current_user:
             raise MutationException('Only voyage owners can invite users')
 
         user = User.query.filter(User.email == email).first()
@@ -77,7 +77,7 @@ class RemoveUserFromVoyage(Mutation):
         if voyage is None:
             raise MutationException('Voyage not found')
 
-        if current_user is not voyage.owner:
+        if voyage.owner != current_user:
             raise MutationException('Only voyage owners can remove users')
 
         user = User.query.filter(User.email == email).first()
