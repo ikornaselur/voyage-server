@@ -1,11 +1,11 @@
-from graphene import Mutation
-
 from flask_login import current_user
+from graphene import Mutation
 
 from voyage import fields
 from voyage.exceptions import MutationException
 from voyage.extensions import db
 from voyage.models import Media, User, Voyage
+from voyage.schema.subscriptions.voyage import voyage_subject
 
 
 class CreateVoyage(Mutation):
@@ -61,6 +61,8 @@ class InviteUserToVoyage(Mutation):
         voyage.members.append(user)
         db.session.commit()
 
+        voyage_subject.on_next(voyage)
+
         return InviteUserToVoyage(voyage=voyage)
 
 
@@ -94,6 +96,8 @@ class RemoveUserFromVoyage(Mutation):
 
         voyage.members.remove(user)
         db.session.commit()
+
+        voyage_subject.on_next(voyage)
 
         return RemoveUserFromVoyage(voyage=voyage)
 
