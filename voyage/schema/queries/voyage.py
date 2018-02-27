@@ -1,13 +1,15 @@
-from voyage import fields
+import graphene
+
+from voyage.fields import ConnectionField, Field
 from voyage.models import Voyage
 
 
 class VoyageQuery(object):
-    voyage = fields.Field(
+    voyage = Field(
         'Voyage',
-        id=fields.ID(required=True),
+        id=graphene.ID(required=True),
     )
-    voyages = fields.ConnectionField('VoyageConnection')
+    voyages = ConnectionField('VoyageConnection')
 
     def resolve_voyage(root, info, id):
         return Voyage.query.get(id)

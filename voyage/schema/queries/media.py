@@ -1,14 +1,16 @@
-from voyage import fields
+import graphene
+
+from voyage.fields import ConnectionField, Field
 from voyage.models import Media
 
 
 class MediaQuery(object):
-    media = fields.Field(
+    media = Field(
         'Media',
-        id=fields.ID(required=True),
+        id=graphene.ID(required=True),
     )
     # I know the plural is media, sue me
-    medias = fields.ConnectionField('MediaConnection')
+    medias = ConnectionField('MediaConnection')
 
     def resolve_media(root, info, id):
         return Media.query.get(id)

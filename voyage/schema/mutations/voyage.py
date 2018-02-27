@@ -1,18 +1,19 @@
+import graphene
 from flask_login import current_user
-from graphene import Mutation
 
-from voyage import events, fields
+from voyage import events
 from voyage.exceptions import MutationException
 from voyage.extensions import db
+from voyage.fields import Field
 from voyage.models import Media, User, Voyage
 
 
-class CreateVoyage(Mutation):
+class CreateVoyage(graphene.Mutation):
     class Arguments:
-        media_id = fields.ID(required=True, description='ID of the media that this voyage is for')
-        name = fields.String(required=True, description='Name of the voyage')
+        media_id = graphene.ID(required=True, description='ID of the media that this voyage is for')
+        name = graphene.String(required=True, description='Name of the voyage')
 
-    voyage = fields.Field('Voyage')
+    voyage = Field('Voyage')
 
     def mutate(root, info, media_id, name):
         media = Media.query.get(media_id)
@@ -34,12 +35,12 @@ class CreateVoyage(Mutation):
         return CreateVoyage(voyage=voyage)
 
 
-class InviteUserToVoyage(Mutation):
+class InviteUserToVoyage(graphene.Mutation):
     class Arguments:
-        voyage_id = fields.ID(required=True, description='ID of the voyage to invite to')
-        email = fields.String(required=True, description='Email of the user to invite')
+        voyage_id = graphene.ID(required=True, description='ID of the voyage to invite to')
+        email = graphene.String(required=True, description='Email of the user to invite')
 
-    voyage = fields.Field('Voyage')
+    voyage = Field('Voyage')
 
     def mutate(root, info, voyage_id, email):
         voyage = Voyage.query.get(voyage_id)
@@ -67,12 +68,12 @@ class InviteUserToVoyage(Mutation):
         return InviteUserToVoyage(voyage=voyage)
 
 
-class RemoveUserFromVoyage(Mutation):
+class RemoveUserFromVoyage(graphene.Mutation):
     class Arguments:
-        voyage_id = fields.ID(required=True, description='ID of the voyage to remove from')
-        email = fields.String(required=True, description='Email of the user to remove')
+        voyage_id = graphene.ID(required=True, description='ID of the voyage to remove from')
+        email = graphene.String(required=True, description='Email of the user to remove')
 
-    voyage = fields.Field('Voyage')
+    voyage = Field('Voyage')
 
     def mutate(root, info, voyage_id, email):
         voyage = Voyage.query.get(voyage_id)

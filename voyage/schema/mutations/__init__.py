@@ -1,10 +1,10 @@
-from graphene import ObjectType
+import graphene
 
 from .voyage import VoyageMutation
 
 
 class Mutation(
-    ObjectType,
+    graphene.ObjectType,
     VoyageMutation,
 ):
     """ Combine all mutations into one """
