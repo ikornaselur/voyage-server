@@ -30,6 +30,10 @@ sqlalchemy-utils = "*"
 flask-dance = {extras = ["sqla"]}
 flask-login = "*"
 blinker = "*"
+graphql-ws = "*"
+gevent = "*"
+flask-sockets = "*"
+rx = "*"
 
 
 [requires]

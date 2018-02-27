@@ -15,6 +15,10 @@ venv: dependencies
 server:
 	FLASK_APP=voyage/application.py FLASK_DEBUG=1 pipenv run flask run -p 9999 --host 0.0.0.0
 
+# Run the gevent server
+gevent:
+	pipenv run python server.py
+
 # Start a postgres docker and expose it on port the configured port
 postgres_docker_init:
 	@docker container inspect ${POSTGRES_DOCKER_NAME} &>/dev/null \

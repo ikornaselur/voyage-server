@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, make_response
 from flask_graphql import GraphQLView
 from flask_login import login_required
 from werkzeug.contrib.fixers import ProxyFix
@@ -23,10 +23,16 @@ def create_app(testing=False):
             GraphQLView.as_view(
                 'graphql',
                 schema=schema,
-                graphiql=True,
+                graphiql=False,
+                allow_subscriptions=True,
             )
         )
     )
+
+    @app.route('/graphiql')
+    def graphiql_view():
+        from voyage.graphiql import render_graphiql
+        return make_response(render_graphiql())
 
     if not testing:
         from voyage.auth import google_auth

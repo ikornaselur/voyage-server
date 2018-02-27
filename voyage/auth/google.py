@@ -24,12 +24,10 @@ def google_auth(app):
 @oauth_authorized.connect_via(blueprint)
 def google_logged_in(blueprint, token):
     if not token:
-        print("Token missing")
         return False
 
     resp = blueprint.session.get('/oauth2/v2/userinfo')
     if not resp.ok:
-        print("Unable to get user info")
         return False
 
     google_info = resp.json()
@@ -49,7 +47,6 @@ def google_logged_in(blueprint, token):
 
     if oauth.user:
         login_user(oauth.user)
-        print("Successfully logged in")
     else:
         user = User(
             name=google_info['name'],
@@ -61,7 +58,6 @@ def google_logged_in(blueprint, token):
         db.session.commit()
 
         login_user(user)
-        print("Successfully created user and logged in")
 
     # Disable Flask-Dance's default behaviour for saving the token
     return False
