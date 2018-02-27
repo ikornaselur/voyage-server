@@ -5,7 +5,7 @@ from voyage import fields
 from voyage.exceptions import MutationException
 from voyage.extensions import db
 from voyage.models import Media, User, Voyage
-from voyage.schema.subscriptions.voyage import voyage_subject
+from voyage.subjects import voyage_subject
 
 
 class CreateVoyage(Mutation):
@@ -61,7 +61,7 @@ class InviteUserToVoyage(Mutation):
         voyage.members.append(user)
         db.session.commit()
 
-        voyage_subject.on_next(voyage)
+        voyage_subject.trigger_updated(voyage)
 
         return InviteUserToVoyage(voyage=voyage)
 
@@ -97,7 +97,7 @@ class RemoveUserFromVoyage(Mutation):
         voyage.members.remove(user)
         db.session.commit()
 
-        voyage_subject.on_next(voyage)
+        voyage_subject.trigger_updated(voyage)
 
         return RemoveUserFromVoyage(voyage=voyage)
 

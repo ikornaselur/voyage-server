@@ -1,8 +1,5 @@
-from rx.subjects import Subject
-
 from voyage import fields
-
-voyage_subject = Subject()
+from voyage.subjects import voyage_subject
 
 
 class VoyageSubscription(object):
@@ -12,4 +9,4 @@ class VoyageSubscription(object):
     )
 
     def resolve_voyage(root, info, id):
-        return voyage_subject.filter(lambda voyage: voyage.id == id)
+        return voyage_subject.subscribe_updated(voyage_id=id)
