@@ -1,10 +1,8 @@
-from graphene import ObjectType
-
-from voyage import fields
+import graphene
 
 
-class User(ObjectType):
-    id = fields.ID()
-    name = fields.String()
-    email = fields.String()
-    profile_picture = fields.String()
+class User(graphene.ObjectType):
+    id = graphene.ID()
+    name = graphene.String()
+    email = graphene.String()
+    profile_picture = graphene.String()

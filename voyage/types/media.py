@@ -1,23 +1,23 @@
-from graphene import ObjectType
+import graphene
 
-from voyage import fields
+from voyage.fields import List
 from voyage.utils.relay import Connection, Node
 
 
-class Media(ObjectType):
+class Media(graphene.ObjectType):
     class Meta:
         interfaces = (Node, )
 
-    id = fields.ID(required=True)
+    id = graphene.ID(required=True)
 
-    series = fields.String()
-    order = fields.Int()
-    name = fields.String()
+    series = graphene.String()
+    order = graphene.Int()
+    name = graphene.String()
 
-    type = fields.String()
-    chapters = fields.List(fields.String)
+    type = graphene.String()
+    chapters = List(graphene.String)
 
-    external_url = fields.String()
+    external_url = graphene.String()
 
 
 class MediaConnection(Connection):

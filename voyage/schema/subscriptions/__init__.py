@@ -1,10 +1,10 @@
-from graphene import ObjectType
+import graphene
 
 from .voyage import VoyageSubscription
 
 
 class Subscription(
-    ObjectType,
+    graphene.ObjectType,
     VoyageSubscription,
 ):
     """ Combine all subscriptions into one """

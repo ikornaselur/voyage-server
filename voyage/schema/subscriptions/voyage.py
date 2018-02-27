@@ -1,10 +1,13 @@
-from voyage import events, fields
+import graphene
+
+from voyage import events
+from voyage.fields import Field
 
 
 class VoyageSubscription(object):
-    voyage_created = fields.Field('Voyage')
-    voyage_updated = fields.Field('Voyage',
-        id=fields.ID(required=True),
+    voyage_created = Field('Voyage')
+    voyage_updated = Field('Voyage',
+        id=graphene.ID(required=True),
     )
 
     def resolve_voyage_created(root, info):

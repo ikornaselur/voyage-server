@@ -1,4 +1,4 @@
-from graphene import ObjectType
+import graphene
 
 from .media import MediaQuery
 from .user import UserQuery
@@ -6,7 +6,7 @@ from .voyage import VoyageQuery
 
 
 class Query(
-    ObjectType,
+    graphene.ObjectType,
     MediaQuery,
     UserQuery,
     VoyageQuery,

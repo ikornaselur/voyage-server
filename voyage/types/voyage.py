@@ -1,20 +1,20 @@
-from graphene import ObjectType
+import graphene
 
-from voyage import fields
+from voyage.fields import Field, List
 from voyage.utils.relay import Connection, Node
 
 
-class Voyage(ObjectType):
+class Voyage(graphene.ObjectType):
     class Meta:
         interfaces = (Node, )
 
-    id = fields.ID(required=True)
-    name = fields.String()
+    id = graphene.ID(required=True)
+    name = graphene.String()
 
-    media = fields.Field('Media')
+    media = Field('Media')
 
-    owner = fields.Field('User')
-    members = fields.List('User')
+    owner = Field('User')
+    members = List('User')
 
 
 class VoyageConnection(Connection):

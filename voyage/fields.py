@@ -1,6 +1,5 @@
 import inspect
-import operator
-from functools import partial, reduce
+from functools import partial
 
 import graphene
 from graphene import relay
@@ -10,25 +9,6 @@ from graphql_relay.connection.arrayconnection import connection_from_list_slice
 
 class FieldException(Exception):
     pass
-
-
-def deep_source_resolver(source, root, info, **kwargs):
-    """ Try to resolve the source from the root dynamically
-
-    Tries to handle both nested dict and nested objects, though not mixed
-    together
-    """
-    if isinstance(root, dict):
-        return reduce(lambda d, key: d.get(key, None) if isinstance(d, dict) else None, source.split('.'), root)
-
-    try:
-        resolved = operator.attrgetter(source)(root)
-    except AttributeError:
-        return None
-
-    if inspect.isfunction(resolved) or inspect.ismethod(resolved):
-        return resolved()
-    return resolved
 
 
 def get_type(_type):
@@ -46,56 +26,13 @@ def get_type(_type):
     return _type
 
 
-def update_source_resolver(kwargs):
-    if 'source' in kwargs:
-        if 'resolver' in kwargs:
-            raise FieldException('Can\'t provide both source and resolver to the same field')
-        source = kwargs.pop('source')
-        kwargs['resolver'] = partial(deep_source_resolver, source)
-    return kwargs
-
-
 class Field(graphene.Field):
-    def __init__(self, *args, **kwargs):
-        if 'source' in kwargs:
-            source = kwargs.pop('source')
-            kwargs['resolver'] = partial(deep_source_resolver, source)
-        super(Field, self).__init__(*args, **kwargs)
-
     @property
     def type(self):
         return get_type(self._type)
 
 
-class ID(graphene.ID):
-    def __new__(self, *args, **kwargs):
-        return graphene.ID(*args, **update_source_resolver(kwargs))
-
-
-class Boolean(graphene.Boolean):
-    def __new__(self, *args, **kwargs):
-        return graphene.Boolean(*args, **update_source_resolver(kwargs))
-
-
-class Int(graphene.Int):
-    def __new__(self, *args, **kwargs):
-        return graphene.Int(*args, **update_source_resolver(kwargs))
-
-
-class Float(graphene.Float):
-    def __new__(self, *args, **kwargs):
-        return graphene.Float(*args, **update_source_resolver(kwargs))
-
-
-class String(graphene.String):
-    def __new__(self, *args, **kwargs):
-        return graphene.String(*args, **update_source_resolver(kwargs))
-
-
 class List(graphene.List):
-    def __init__(self, *args, **kwargs):
-        super(List, self).__init__(*args, **update_source_resolver(kwargs))
-
     @property
     def of_type(self):
         return get_type(self._of_type)

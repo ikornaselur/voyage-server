@@ -1,10 +1,7 @@
-# encoding: utf-8
 import graphene
 
-from graphene import relay
 
-
-class Node(relay.Node):
+class Node(graphene.relay.Node):
     class Meta:
         name = 'Node'
 
@@ -17,7 +14,7 @@ class Node(relay.Node):
         raise NotImplemented
 
 
-class Connection(relay.Connection):
+class Connection(graphene.relay.Connection):
     class Meta:
         abstract = True
 
