@@ -13,5 +13,5 @@ class VoyageSubscription(object):
     def resolve_voyage_created(root, info):
         return events.voyage.subscribe_created()
 
-    def resolve_voyage(root, info, id):
+    def resolve_voyage_updated(root, info, id):
         return events.voyage.subscribe_updated(voyage_id=id)
