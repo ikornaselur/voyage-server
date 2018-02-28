@@ -1,3 +1,5 @@
+import os
+
 from flask import redirect, url_for
 from flask_login import LoginManager, login_required, logout_user
 from flask_sockets import Sockets
@@ -25,6 +27,8 @@ def setup_login_manager(app):
 
     @login_manager.unauthorized_handler
     def unauthorized_callback():
+        if os.environ.get('LOCAL_AUTH'):
+            return redirect(url_for('login_local'))
         return redirect(url_for('google.login'))
 
     @app.route('/logout')
