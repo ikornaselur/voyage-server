@@ -6,7 +6,8 @@ from voyage.fields import Field
 
 class VoyageSubscription(object):
     voyage_created = Field('Voyage')
-    voyage_updated = Field('Voyage',
+    voyage_updated = Field(
+        'Voyage',
         id=graphene.ID(required=True),
     )
 
