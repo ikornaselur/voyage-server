@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "898ed6736f579c5883f1997253b16c5c3a9dada4b7337e4e2b51f42e865c50b2"
+            "sha256": "e77dad5f07f91e35379125abf15344b5ac729189ff3b8d1f020cebf4816b8385"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -246,6 +246,12 @@
                 "sha256:95506bac89df7a495e0b8c813fd782dd1ae590decb52f95248e316c6659ca49b"
             ],
             "version": "==2.1"
+        },
+        "psycogreen": {
+            "hashes": [
+                "sha256:9acfa6cb5373bcf1eaf27c904d98d59c9f3bb0065cbb005f83ccc45055ace9a1"
+            ],
+            "version": "==1.0"
         },
         "psycopg2-binary": {
             "hashes": [

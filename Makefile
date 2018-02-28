@@ -11,12 +11,8 @@ dependencies:
 venv: dependencies
 	pipenv install --dev
 
-# Run the dev server
-server:
-	FLASK_APP=voyage/application.py FLASK_DEBUG=1 pipenv run flask run -p 9999 --host 0.0.0.0
-
 # Run the gevent server
-gevent:
+server:
 	pipenv run python server.py
 
 # Start a postgres docker and expose it on port the configured port
@@ -38,10 +34,6 @@ postgres_init: postgres
 # Init DB
 database_init: postgres
 	pipenv run python init_db.py
-
-# Add test data
-test_data: database_init
-	pipenv run python test_data.py
 
 # Connect to postgres
 pg:
