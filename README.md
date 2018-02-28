@@ -18,8 +18,10 @@ You can get quickly quickly up and running with the following make targets:
 make venv
 make postgres_init
 make database_init
-make server  # Run the flask debug server, without subscription support
-make gevent  # Run the gevent uwsgi server, with subscription support
+make server  # Run the gevent uwsgi server, with subscription support
+
+# Or just run the bootstrap which will run the first three
+make bootstrap
 ```
 
 #### venv
