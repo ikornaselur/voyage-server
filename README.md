@@ -16,12 +16,18 @@ You can get quickly quickly up and running with the following make targets:
 
 ```
 make venv
-make postgres
+make postgres_init
+make database_init
+make server  # Run the flask debug server, without subscription support
+make gevent  # Run the gevent uwsgi server, with subscription support
 ```
 
 #### venv
 Will make sure `pipenv` is installed before using it to install the environment
 
-#### postgres
+#### postgres_init
 Will create a docker container named `postgres_voyage`, create a `voyage`
-database and user. Initializes the database based on the models.
+database and user.
+
+#### database_init
+Initializes the database based on the models.

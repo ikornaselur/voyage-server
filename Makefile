@@ -39,10 +39,6 @@ postgres_init: postgres
 database_init: postgres
 	pipenv run python init_db.py
 
-# Add test data
-test_data: database_init
-	pipenv run python test_data.py
-
 # Connect to postgres
 pg:
 	pipenv run pgcli -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U voyage voyage
