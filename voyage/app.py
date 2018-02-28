@@ -7,6 +7,11 @@ from werkzeug.contrib.fixers import ProxyFix
 
 
 def create_app(testing=False):
+    from gevent.monkey import patch_all
+    patch_all()
+    from psycogreen.gevent import patch_psycopg
+    patch_psycopg()
+
     app = Flask('voyage')
     app.wsgi_app = ProxyFix(app.wsgi_app)
 
@@ -30,6 +35,7 @@ def create_app(testing=False):
     )
 
     @app.route('/graphiql')
+    @login_required
     def graphiql_view():
         from voyage.graphiql import render_graphiql
         return make_response(render_graphiql())

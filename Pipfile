@@ -35,6 +35,7 @@ graphql-ws = "*"
 gevent = "*"
 flask-sockets = "*"
 rx = "*"
+psycogreen = "*"
 
 
 [requires]
