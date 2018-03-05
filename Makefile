@@ -56,9 +56,5 @@ test:
 test_debug:
 	PIPENV_DOTENV_LOCATION=$(shell pwd)/.env.test pipenv run py.test tests/ -vv -s --ff -x
 
-# Update all test snapshots
-update_snapshots:
-	PIPENV_DOTENV_LOCATION=$(shell pwd)/.env.test pipenv run py.test tests/ --snapshot-update
-
 # Bootstrap the project, set up env and database
 bootstrap: venv postgres_init database_init

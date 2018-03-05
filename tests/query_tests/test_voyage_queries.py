@@ -1,52 +1,11 @@
-def test_getting_all_voyages(graph_client, db_voyage, snapshot):
-    executed = graph_client.execute(
-        '''
-            query {
-                voyages {
-                    edges {
-                        node {
-                            name
-                            media {
-                                name
-                            }
-                            owner {
-                                name
-                                email
-                            }
-                            members {
-                                name
-                                email
-                            }
-                        }
-                    }
-                }
-            }
-        ''')
-
-    assert 'errors' not in executed
-    snapshot.assert_match(executed)
+from voyage.schema.queries import VoyageQuery
 
 
-def test_getting_single_voyage(graph_client, db_voyage, snapshot):
-    executed = graph_client.execute(
-        '''
-            query {{
-                voyage (id: "{}") {{
-                    name
-                    media {{
-                        name
-                    }}
-                    owner {{
-                        name
-                        email
-                    }}
-                    members {{
-                        name
-                        email
-                    }}
-                }}
-            }}
-        '''.format(db_voyage.id))
+def test_getting_all_voyages(graph_client, db_voyage):
+    voyages = VoyageQuery.resolve_voyages('root', 'info').all()
+    assert voyages == [db_voyage]
 
-    assert 'errors' not in executed
-    snapshot.assert_match(executed)
+
+def test_getting_single_voyage(graph_client, db_voyage):
+    voyage = VoyageQuery.resolve_voyage('root', 'info', db_voyage.id)
+    assert voyage == db_voyage
