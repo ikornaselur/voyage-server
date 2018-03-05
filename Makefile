@@ -18,14 +18,16 @@ server:
 # Start a postgres docker and expose it on port the configured port
 postgres_docker_init:
 	@docker container inspect ${POSTGRES_DOCKER_NAME} &>/dev/null \
-		|| docker run -d --name ${POSTGRES_DOCKER_NAME} -p $(POSTGRES_PORT):5432 postgres
+		|| docker run -d --name ${POSTGRES_DOCKER_NAME} -p $(POSTGRES_PORT):5432 postgres:10.2
 
 # Start the postgres docker
 postgres: postgres_docker_init
 	@docker start ${POSTGRES_DOCKER_NAME}
 
 # Initialize postgres
-postgres_init: postgres
+postgres_init: postgres _postgres_init
+
+_postgres_init:
 	@sleep 5
 	-createuser -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U postgres voyage
 	-createdb -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U postgres -O voyage voyage
