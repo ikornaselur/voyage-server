@@ -1,4 +1,4 @@
-POSTGRES_PORT = 15432
+POSTGRES_PORT = 5432
 POSTGRES_HOST = "localhost"
 POSTGRES_DOCKER_NAME = "postgres_voyage"
 
