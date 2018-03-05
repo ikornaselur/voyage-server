@@ -25,9 +25,7 @@ postgres: postgres_docker_init
 	@docker start ${POSTGRES_DOCKER_NAME}
 
 # Initialize postgres
-postgres_init: postgres _postgres_init
-
-_postgres_init:
+postgres_init: postgres
 	@sleep 5
 	-createuser -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U postgres voyage
 	-createdb -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U postgres -O voyage voyage
