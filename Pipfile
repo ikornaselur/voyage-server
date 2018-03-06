@@ -8,33 +8,32 @@ name = "pypi"
 [dev-packages]
 
 pgcli = "*"
-flask-script = "*"
+Flask-Script = "*"
 ipdb = "*"
 pdbpp = "*"
 "flake8" = "*"
 pytest = "*"
-snapshottest = "*"
 mock = "*"
 isort = "*"
 
 
 [packages]
 
-flask = "*"
+Flask = "*"
 graphene = "*"
-sqlalchemy = "*"
+SQLAlchemy = "*"
 graphene-sqlalchemy = "*"
-flask-graphql = "*"
-flask-sqlalchemy = "*"
-sqlalchemy-utils = "*"
+Flask-GraphQL = "*"
+Flask-SQLAlchemy = "*"
+SQLAlchemy-Utils = "*"
 "psycopg2-binary" = "*"
-flask-dance = {extras = ["sqla"]}
-flask-login = "*"
+Flask-Dance = {extras = ["sqla"]}
+Flask-Login = "*"
 blinker = "*"
 graphql-ws = "*"
 gevent = "*"
-flask-sockets = "*"
-rx = "*"
+Flask-Sockets = "*"
+Rx = "*"
 psycogreen = "*"
 
 

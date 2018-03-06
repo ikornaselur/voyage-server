@@ -1,4 +1,4 @@
-POSTGRES_PORT = 15432
+POSTGRES_PORT = 5432
 POSTGRES_HOST = "localhost"
 POSTGRES_DOCKER_NAME = "postgres_voyage"
 
@@ -18,7 +18,7 @@ server:
 # Start a postgres docker and expose it on port the configured port
 postgres_docker_init:
 	@docker container inspect ${POSTGRES_DOCKER_NAME} &>/dev/null \
-		|| docker run -d --name ${POSTGRES_DOCKER_NAME} -p $(POSTGRES_PORT):5432 postgres
+		|| docker run -d --name ${POSTGRES_DOCKER_NAME} -p $(POSTGRES_PORT):5432 postgres:10.2
 
 # Start the postgres docker
 postgres: postgres_docker_init
@@ -55,10 +55,6 @@ test:
 # Run all tests, without capturing output
 test_debug:
 	PIPENV_DOTENV_LOCATION=$(shell pwd)/.env.test pipenv run py.test tests/ -vv -s --ff -x
-
-# Update all test snapshots
-update_snapshots:
-	PIPENV_DOTENV_LOCATION=$(shell pwd)/.env.test pipenv run py.test tests/ --snapshot-update
 
 # Bootstrap the project, set up env and database
 bootstrap: venv postgres_init database_init
