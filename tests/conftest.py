@@ -107,8 +107,3 @@ def db_voyage(db_session, db_media, db_user_owner, db_user_member):
 @pytest.yield_fixture(scope='function')
 def client(app):
     yield app.test_client()
-
-
-@pytest.fixture(scope='session')
-def graph_client():
-    yield Client(schema=schema)

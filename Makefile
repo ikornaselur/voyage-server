@@ -45,8 +45,8 @@ shell:
 
 # Lint
 lint:
-	pipenv run flake8 voyage
-	pipenv run isort -c -df -rc voyage
+	pipenv run flake8 voyage tests
+	pipenv run isort -c -df -rc voyage tests
 
 # Run all tests
 test:
