@@ -6,8 +6,11 @@ from flask_login import login_required
 from werkzeug.contrib.fixers import ProxyFix
 
 
+ENABLE_SUBSCRIPTIONS = os.environ.get('DISABLE_SUBSCRIPTIONS') is None
+
+
 def create_app(testing=False):
-    if not os.environ.get('DISABLE_PSYCOGREEN'):
+    if ENABLE_SUBSCRIPTIONS:
         from gevent.monkey import patch_all
         patch_all()
         from psycogreen.gevent import patch_psycopg
@@ -29,8 +32,8 @@ def create_app(testing=False):
             GraphQLView.as_view(
                 'graphql',
                 schema=schema,
-                graphiql=False,
-                allow_subscriptions=True,
+                graphiql=True,
+                allow_subscriptions=ENABLE_SUBSCRIPTIONS,
             )
         )
     )
@@ -39,7 +42,7 @@ def create_app(testing=False):
     @login_required
     def graphiql_view():
         from voyage.graphiql import render_graphiql
-        return make_response(render_graphiql())
+        return make_response(render_graphiql(enable_subscriptions=ENABLE_SUBSCRIPTIONS))
 
     if not testing:
         if os.environ.get('LOCAL_AUTH', False):

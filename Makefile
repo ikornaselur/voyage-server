@@ -15,6 +15,13 @@ venv: dependencies
 server:
 	pipenv run python server.py
 
+# Run the flask dev server
+# Will disable subscriptions, since they require running the gevent server
+# The dev server is recommended (for now) when not developing anything related
+# to subscriptions, since it supports reloading on code changes
+dev_server:
+	DISABLE_SUBSCRIPTIONS=1 FLASK_APP=voyage/application.py FLASK_DEBUG=1 pipenv run flask run -p 9999 --host 0.0.0.0
+
 # Start a postgres docker and expose it on port the configured port
 postgres_docker_init:
 	@docker container inspect ${POSTGRES_DOCKER_NAME} &>/dev/null \
