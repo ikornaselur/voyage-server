@@ -1,5 +1,5 @@
-import graphene
 from flask_login import current_user
+from graphene.types import ID, Mutation, String
 
 from voyage import events
 from voyage.exceptions import MutationException
@@ -8,10 +8,10 @@ from voyage.fields import Field
 from voyage.models import Media, User, Voyage
 
 
-class CreateVoyage(graphene.Mutation):
+class CreateVoyage(Mutation):
     class Arguments:
-        media_id = graphene.ID(required=True, description='ID of the media that this voyage is for')
-        name = graphene.String(required=True, description='Name of the voyage')
+        media_id = ID(required=True, description='ID of the media that this voyage is for')
+        name = String(required=True, description='Name of the voyage')
 
     voyage = Field('Voyage')
 
@@ -35,10 +35,10 @@ class CreateVoyage(graphene.Mutation):
         return CreateVoyage(voyage=voyage)
 
 
-class InviteUserToVoyage(graphene.Mutation):
+class InviteUserToVoyage(Mutation):
     class Arguments:
-        voyage_id = graphene.ID(required=True, description='ID of the voyage to invite to')
-        email = graphene.String(required=True, description='Email of the user to invite')
+        voyage_id = ID(required=True, description='ID of the voyage to invite to')
+        email = String(required=True, description='Email of the user to invite')
 
     voyage = Field('Voyage')
 
@@ -68,10 +68,10 @@ class InviteUserToVoyage(graphene.Mutation):
         return InviteUserToVoyage(voyage=voyage)
 
 
-class RemoveUserFromVoyage(graphene.Mutation):
+class RemoveUserFromVoyage(Mutation):
     class Arguments:
-        voyage_id = graphene.ID(required=True, description='ID of the voyage to remove from')
-        email = graphene.String(required=True, description='Email of the user to remove')
+        voyage_id = ID(required=True, description='ID of the voyage to remove from')
+        email = String(required=True, description='Email of the user to remove')
 
     voyage = Field('Voyage')
 

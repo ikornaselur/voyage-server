@@ -1,9 +1,8 @@
 import inspect
 from functools import partial
 
-import graphene
 from graphene import relay
-from graphene.relay.connection import PageInfo
+from graphene.types import Field, List, ObjectType
 from graphql_relay.connection.arrayconnection import connection_from_list_slice
 
 
@@ -18,7 +17,7 @@ def get_type(_type):
             result = getattr(types, _type)
         except AttributeError:
             raise ImportError("voyage.types does not expose '{}' type".format(_type))
-        if not inspect.isclass(result) or not issubclass(result, graphene.ObjectType):
+        if not inspect.isclass(result) or not issubclass(result, ObjectType):
             raise ImportError("'{}' is not a subclass of graphene.ObjectType".format(result))
         return result
     if inspect.isfunction(_type) or isinstance(_type, partial):
@@ -26,13 +25,13 @@ def get_type(_type):
     return _type
 
 
-class Field(graphene.Field):
+class Field(Field):
     @property
     def type(self):
         return get_type(self._type)
 
 
-class List(graphene.List):
+class List(List):
     @property
     def of_type(self):
         return get_type(self._of_type)
@@ -73,7 +72,7 @@ class ConnectionField(relay.ConnectionField):
             list_length=_len,
             list_slice_length=_len,
             connection_type=connection,
-            pageinfo_type=PageInfo,
+            pageinfo_type=relay.connection.PageInfo,
             edge_type=connection.Edge,
         )
         connection.iterable = iterable
