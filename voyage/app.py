@@ -7,10 +7,11 @@ from werkzeug.contrib.fixers import ProxyFix
 
 
 def create_app(testing=False):
-    from gevent.monkey import patch_all
-    patch_all()
-    from psycogreen.gevent import patch_psycopg
-    patch_psycopg()
+    if not os.environ.get('DISABLE_PSYCOGREEN'):
+        from gevent.monkey import patch_all
+        patch_all()
+        from psycogreen.gevent import patch_psycopg
+        patch_psycopg()
 
     app = Flask('voyage')
     app.wsgi_app = ProxyFix(app.wsgi_app)

@@ -3,12 +3,10 @@ from contextlib import contextmanager
 import pytest
 from flask.testing import FlaskClient
 from flask_login import login_user
-from graphene.test import Client
 
 from voyage.app import create_app
 from voyage.extensions import db as _db
 from voyage.models import Media, User, Voyage
-from voyage.schema import schema
 
 
 class TestClient(FlaskClient):
