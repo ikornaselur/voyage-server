@@ -64,6 +64,16 @@ class Voyage(db.Model):
     def chapters(self):
         return self.media.chapters
 
+    @property
+    def comments(self):
+        from voyage.models import Comment
+        return (
+            Comment.query
+            .filter(
+                Comment.voyage == self,
+            )
+        ).all()
+
     def add_member(self, user):
         from voyage.models import Membership
 
