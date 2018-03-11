@@ -5,7 +5,6 @@ from flask_graphql import GraphQLView
 from flask_login import login_required
 from werkzeug.contrib.fixers import ProxyFix
 
-
 ENABLE_SUBSCRIPTIONS = os.environ.get('DISABLE_SUBSCRIPTIONS') is None
 
 
