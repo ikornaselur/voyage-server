@@ -60,7 +60,7 @@ class InviteUserToVoyage(graphene.Mutation):
         if user in voyage.members:
             raise MutationException('User already a part of the mutation')
 
-        voyage.members.append(user)
+        voyage.add_member(user)
         db.session.commit()
 
         events.voyage.updated(voyage)
@@ -96,7 +96,7 @@ class RemoveUserFromVoyage(graphene.Mutation):
         if user is voyage.owner:
             raise MutationException("Owners can't be removed from their voyage")
 
-        voyage.members.remove(user)
+        voyage.remove_member(user)
         db.session.commit()
 
         events.voyage.updated(voyage)

@@ -94,8 +94,8 @@ def db_voyage(db_session, db_media, db_user_owner, db_user_member):
         name='The Voyage',
         media=db_media,
         owner=db_user_owner,
-        members=[db_user_owner, db_user_member],
     )
+    voyage.add_member(db_user_member)
     db_session.add(voyage)
     db_session.commit()
 

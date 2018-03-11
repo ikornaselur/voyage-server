@@ -37,6 +37,7 @@ class Voyage(db.Model):
             .join(Membership)
             .filter(
                 Membership.voyage == self,
+                Membership.active == True,
             )
         ).all()
 
