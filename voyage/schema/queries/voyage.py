@@ -8,12 +8,12 @@ from voyage.models import Comment, Voyage
 class VoyageQuery(object):
     voyage = Field(
         'Voyage',
-        voyage_id=ID(required=True),
+        voyage_id=ID(name='id', required=True),
     )
     voyages = ConnectionField('VoyageConnection')
     comments_for_voyage = ConnectionField(
         'CommentConnection',
-        voyage_id=ID(required=True),
+        voyage_id=ID(name='id', required=True),
         chapter=String(),
     )
 

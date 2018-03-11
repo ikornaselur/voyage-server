@@ -7,7 +7,7 @@ from voyage.models import Media
 class MediaQuery(object):
     media = Field(
         'Media',
-        media_id=ID(required=True),
+        media_id=ID(name='id', required=True),
     )
     # I know the plural is media, sue me
     medias = ConnectionField('MediaConnection')

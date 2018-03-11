@@ -37,5 +37,13 @@ class Media(db.Model):
     # thetvdb.com or goodreads.com
     external_url = db.Column(db.String)
 
+    def __init__(self, series, order, name, type, chapters, external_url=None):
+        self.series = series
+        self.order = order
+        self.name = name
+        self.type = type
+        self.external_url = external_url
+        self.chapters = [str(c) for c in chapters]  # Ensure the chapters are a list of strings
+
     def __repr__(self):
         return "<Media: {} ({})>".format(self.name, self.id)
