@@ -32,8 +32,13 @@ postgres_init: postgres
 	-createdb -h ${POSTGRES_HOST} -p ${POSTGRES_PORT} -U postgres -O voyage voyage_test
 
 # Init DB
+# Makes sure postgres is running and then runs init_db.py
 database_init: postgres
 	pipenv run python init_db.py
+
+# Create some test fixtures in the local database
+fixtures:
+	pipenv run python fixtures.py
 
 # Connect to postgres
 pg:
@@ -41,12 +46,12 @@ pg:
 
 # Open a ipython shell with the application context
 shell:
-	pipenv run python manage.py shell
+	DISABLE_PSYCOGREEN=1 pipenv run python manage.py shell
 
 # Lint
 lint:
-	pipenv run flake8 voyage
-	pipenv run isort -c -df -rc voyage
+	pipenv run flake8 voyage tests
+	pipenv run isort -c -df -rc voyage tests
 
 # Run all tests
 test:
