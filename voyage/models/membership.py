@@ -1,8 +1,10 @@
 from sqlalchemy.orm import validates
 
-from voyage.exceptions import InvalidChapterException
+from voyage.exceptions import InvalidChapterException, InvalidRoleException
 from voyage.extensions import db
 from voyage.utils import UUIDString, uuid4_str
+
+ROLES = ['owner', 'member']
 
 
 class Membership(db.Model):
@@ -46,3 +48,9 @@ class Membership(db.Model):
             raise InvalidChapterException('Chapter {} is not available in this voyage'.format(chapter))
 
         return chapter
+
+    @validates('role')
+    def validate_role(self, key, role):
+        if role not in ROLES:
+            raise InvalidRoleException('Unknown role: {}'.format(role))
+        return role
