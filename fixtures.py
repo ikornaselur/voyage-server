@@ -1,6 +1,8 @@
+import random
+
 from voyage.app import create_app
 from voyage.extensions import db
-from voyage.models import Media, User, Voyage
+from voyage.models import Comment, Media, User, Voyage
 
 
 def create_users():
@@ -53,9 +55,36 @@ def create_voyages():
     db.session.add(voyage1)
     db.session.commit()
 
+    voyage2 = Voyage(
+        name='Test voyage 2',
+        media=Media.query.offset(1).first(),
+        owner=User.query.offset(2).first(),
+    )
+
+    voyage2.add_member(User.query.offset(3).first())
+    voyage2.add_member(User.query.offset(4).first())
+
+    db.session.add(voyage2)
+    db.session.commit()
+
+
+def create_comments():
+    print("[*] Creating comments")
+    voyage = Voyage.query.first()
+    for i in range(20):
+        comment = Comment(
+            user=random.choice(voyage.members),
+            voyage=voyage,
+            text='This is comment #{}'.format(i),
+            chapter=random.choice(voyage.chapters),
+        )
+        db.session.add(comment)
+    db.session.commit()
+
 
 if __name__ == "__main__":
     with create_app().app_context():
         create_users()
         create_medias()
         create_voyages()
+        create_comments()
