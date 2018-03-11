@@ -1,8 +1,9 @@
+from flask_login import current_user
 from graphene.types import ID, String
 
 from voyage.exceptions import QueryException
 from voyage.fields import ConnectionField, Field
-from voyage.models import Comment, Voyage
+from voyage.models import Comment, Membership, Voyage
 
 
 class VoyageQuery(object):
@@ -27,7 +28,27 @@ class VoyageQuery(object):
         voyage = Voyage.query.get(voyage_id)
         if voyage is None:
             raise QueryException('Voyage not found')
-        comments = Comment.query.filter(Comment.voyage == voyage)
+
+        membership = (
+            Membership.query
+            .filter(
+                Membership.voyage == voyage,
+                Membership.user == current_user,
+            )
+        ).first()
+        if membership is None:
+            raise QueryException('Voyage not found')
+
+        current_chapter_index = voyage.chapters.index(membership.current_chapter)
+        allowed_chapters = voyage.chapters[:current_chapter_index + 1]  # Include the current chapter with + 1
+
+        comments = (
+            Comment.query
+            .filter(
+                Comment.voyage == voyage,
+                Comment.chapter.in_(allowed_chapters),
+            )
+        )
 
         if chapter:
             if chapter not in voyage.chapters:

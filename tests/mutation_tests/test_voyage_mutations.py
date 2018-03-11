@@ -31,3 +31,11 @@ def test_removing_a_user_from_voyage(db_voyage, db_user_owner, db_user_member, c
         RemoveUserFromVoyage.mutate('root', 'info', db_voyage.id, db_user_member.email)
 
     assert db_user_member not in db_voyage.members
+
+
+def test_comment_on_chapter():
+    pass
+
+
+def test_comment_on_chapter_fails_if_not_member():
+    pass

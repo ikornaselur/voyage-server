@@ -53,7 +53,7 @@ pg:
 
 # Open a ipython shell with the application context
 shell:
-	DISABLE_PSYCOGREEN=1 pipenv run python manage.py shell
+	DISABLE_SUBSCRIPTIONS=1 pipenv run python manage.py shell
 
 # Lint
 lint:
