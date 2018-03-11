@@ -43,7 +43,7 @@ def db_media(db_session):
         order=1,
         name='name',
         type='book',
-        chapters=['1', '2'],
+        chapters=['Prologue', '1', '2', 'I-1', 'I-2', '3', '4', 'Epilogue'],
         external_url='http://example.com'
     )
     db_session.add(media)

@@ -1,7 +1,8 @@
-import graphene
+from graphene import relay
+from graphene.types import Int
 
 
-class Node(graphene.relay.Node):
+class Node(relay.Node):
     class Meta:
         name = 'Node'
 
@@ -14,8 +15,8 @@ class Node(graphene.relay.Node):
         raise NotImplemented
 
 
-class Connection(graphene.relay.Connection):
+class Connection(relay.Connection):
     class Meta:
         abstract = True
 
-    count = graphene.Int()
+    count = Int()

@@ -1,6 +1,11 @@
+import datetime as dt
+import random
+
+from sqlalchemy_utc import utc
+
 from voyage.app import create_app
 from voyage.extensions import db
-from voyage.models import Media, User, Voyage
+from voyage.models import Comment, Media, User, Voyage
 
 
 def create_users():
@@ -18,12 +23,17 @@ def create_users():
 def create_medias():
     print("[*] Creating medias")
     for i in range(1, 3):
+        custom_chapters = (
+            list(range(1, 6)) +
+            ['I-1', 'I-2', 'I-3', 'I-4'] +
+            list(range(6, 11))
+        )
         media = Media(
             series='Test tv show',
             order=i,
             name='Season #{}'.format(i),
             type='tvshow',
-            chapters=list(range(1, 11)),
+            chapters=custom_chapters,
         )
         db.session.add(media)
 
@@ -53,9 +63,39 @@ def create_voyages():
     db.session.add(voyage1)
     db.session.commit()
 
+    voyage2 = Voyage(
+        name='Test voyage 2',
+        media=Media.query.offset(4).first(),
+        owner=User.query.offset(2).first(),
+    )
+
+    voyage2.add_member(User.query.offset(3).first())
+    voyage2.add_member(User.query.offset(4).first())
+
+    db.session.add(voyage2)
+    db.session.commit()
+
+
+def create_comments():
+    print("[*] Creating comments")
+    voyage = Voyage.query.first()
+    delay = 0
+    for i in range(20):
+        comment = Comment(
+            user=random.choice(voyage.members),
+            created=dt.datetime(2018, 1, 1, 13, tzinfo=utc) + dt.timedelta(seconds=delay),
+            voyage=voyage,
+            text='This is comment #{}'.format(i),
+            chapter=random.choice(voyage.chapters),
+        )
+        db.session.add(comment)
+        delay += random.randint(100, 1000)  # Simulate some time between comments
+    db.session.commit()
+
 
 if __name__ == "__main__":
     with create_app().app_context():
         create_users()
         create_medias()
         create_voyages()
+        create_comments()

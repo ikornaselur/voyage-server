@@ -1,7 +1,7 @@
 from string import Template
 
 
-def render_graphiql():
+def render_graphiql(enable_subscriptions=True):
     return Template('''
 <!DOCTYPE html>
 <html>
@@ -56,7 +56,7 @@ def render_graphiql():
       }
     }
     var fetcher;
-    if (true) {
+    if (${enableSubscriptions}) {
       var subscriptionsClient = new window.SubscriptionsTransportWs.SubscriptionClient('${subscriptionsEndpoint}', {
         reconnect: true
       });
@@ -119,5 +119,6 @@ def render_graphiql():
         GRAPHIQL_VERSION='0.11.11',
         SUBSCRIPTIONS_TRANSPORT_VERSION='0.7.0',
         subscriptionsEndpoint='wss://server.itsa.voyage/subscriptions',
+        enableSubscriptions='true' if enable_subscriptions else 'false',
         endpointURL='/',
     )
