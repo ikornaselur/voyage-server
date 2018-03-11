@@ -1,4 +1,6 @@
+from sqlalchemy import func
 from sqlalchemy.orm import validates
+from sqlalchemy_utc import UtcDateTime
 
 from voyage.exceptions import InvalidChapterException, InvalidRoleException
 from voyage.extensions import db
@@ -15,6 +17,8 @@ class Membership(db.Model):
     __tablename__ = 'voyage_user_membership'
 
     id = db.Column(UUIDString, primary_key=True, default=uuid4_str)
+    created = db.Column(UtcDateTime, server_default=func.now())
+    modified = db.Column(UtcDateTime, onupdate=func.now())
 
     voyage_id = db.Column(UUIDString, db.ForeignKey('voyage.id'), nullable=False)
     voyage = db.relationship('Voyage', backref='memberships')

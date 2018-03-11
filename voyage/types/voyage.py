@@ -1,15 +1,19 @@
-import graphene
+from graphene.types import ID, ObjectType, String
+from graphene.types.datetime import DateTime
 
 from voyage.fields import Field, List
 from voyage.utils.relay import Connection, Node
 
 
-class Voyage(graphene.ObjectType):
+class Voyage(ObjectType):
     class Meta:
         interfaces = (Node, )
 
-    id = graphene.ID(required=True)
-    name = graphene.String()
+    id = ID(required=True)
+    created = DateTime()
+    modified = DateTime()
+
+    name = String()
 
     media = Field('Media')
 

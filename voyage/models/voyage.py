@@ -1,3 +1,6 @@
+from sqlalchemy import func
+from sqlalchemy_utc import UtcDateTime
+
 from voyage.extensions import db
 from voyage.utils import UUIDString, uuid4_str
 
@@ -6,6 +9,9 @@ class Voyage(db.Model):
     __tablename__ = 'voyage'
 
     id = db.Column(UUIDString, primary_key=True, default=uuid4_str)
+    created = db.Column(UtcDateTime, server_default=func.now())
+    modified = db.Column(UtcDateTime, onupdate=func.now())
+
     name = db.Column(db.String, nullable=False)
 
     media_id = db.Column(UUIDString, db.ForeignKey('media.id'), nullable=False)

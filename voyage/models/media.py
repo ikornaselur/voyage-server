@@ -1,4 +1,6 @@
+from sqlalchemy import func
 from sqlalchemy.dialects.postgresql import ARRAY
+from sqlalchemy_utc import UtcDateTime
 
 from voyage.extensions import db
 from voyage.utils import MutableList, UUIDString, uuid4_str
@@ -22,6 +24,8 @@ class Media(db.Model):
     __tablename__ = 'media'
 
     id = db.Column(UUIDString, primary_key=True, default=uuid4_str)
+    created = db.Column(UtcDateTime, server_default=func.now())
+    modified = db.Column(UtcDateTime, onupdate=func.now())
 
     series = db.Column(db.String, nullable=False)
     order = db.Column(db.Integer, nullable=False)
