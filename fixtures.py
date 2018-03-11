@@ -9,7 +9,7 @@ def create_users():
         user = User(
             name='Text User {}'.format(i),
             email='TestEmail{}@example.com'.format(i),
-            profile_picture='https://robohash.org/{}.png'.format('user{}'.format(i)),
+            profile_picture='https://robohash.org/{}.png?bgset=bg1&set=set4'.format('user{}'.format(i)),
         )
         db.session.add(user)
     db.session.commit()
