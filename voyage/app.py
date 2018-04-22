@@ -43,15 +43,6 @@ def create_app(testing=False):
         from voyage.graphiql import render_graphiql
         return make_response(render_graphiql(enable_subscriptions=ENABLE_SUBSCRIPTIONS))
 
-    if not testing:
-        if os.environ.get('LOCAL_AUTH', False):
-            # Just set up local auth
-            from voyage.auth import local_auth
-            local_auth(app)
-        else:
-            from voyage.auth import google_auth
-            google_auth(app)
-
     from voyage.extensions import configure_extensions
     configure_extensions(app)
 

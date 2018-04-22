@@ -27,7 +27,6 @@ flask-graphql = "*"
 flask-sqlalchemy = "*"
 sqlalchemy-utils = "*"
 "psycopg2-binary" = "*"
-flask-dance = {extras = ["sqla"]}
 flask-login = "*"
 blinker = "*"
 graphql-ws = "*"
